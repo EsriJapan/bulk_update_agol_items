@@ -12,7 +12,7 @@ Excel に整理してあるArcGIS Online（もしくはPortal） のアイテム
 
 Excel の整理例は、[3D都市モデル_AGOLアイテム詳細_開発テスト用.xlsx] として提供しておりますのであわせてご参照ください。また、description 列の更新は、VBAマクロのサンプルを[UpdateDescription_SampleVBA.txt] として提供しておりますので、必要に応じてご参照ください。
 
-次のファイルが含まれます。
+次のファイルが含まれます。ファイル一式は[こちらから](https://github.com/EsriJapan/bulk_update_agol_items/archive/refs/heads/main.zip) 入手可能です。
 - ノートブック ファイル： Update_Items_fromExcel.ipynb
 - Excel のサンプル： 3D都市モデル_AGOLアイテム詳細_開発テスト用.xlsx
 - description 列を更新するVBAマクロのサンプル： UpdateDescription_SampleVBA.txt
