@@ -1,0 +1,155 @@
+Attribute VB_Name = "Module1"
+Option Explicit
+
+'##########################################################################
+'
+' 目的：
+'   入力の負担が多いdescription 列を更新するマクロ
+'
+'##########################################################################
+
+Public Sub UpdateDescriptions()
+
+  On Error GoTo Eh
+  
+  Dim sheet As Worksheet
+  Set sheet = Worksheets("更新用Sheet1")
+  
+  Dim description As String
+  Dim city_name As String
+  Dim data_size As String
+  Dim data_url As String
+  Dim data_list_csv As String
+  Dim data_date As String
+  
+  Dim i As Long
+  Dim j As Long
+  j = 1
+  
+  Dim firstRow As Long
+  firstRow = 2
+  
+  '最終行の取得
+  Dim lastRow As Long
+  lastRow = getLastRow(sheet, j)
+  
+  For i = firstRow To lastRow
+    city_name = sheet.Cells(i, 8) 'H列
+    data_size = sheet.Cells(i, 10)  'J列
+    data_url = sheet.Cells(i, 11) 'K列
+    data_list_csv = sheet.Cells(i, 12)  'L列
+    data_date = Format(sheet.Cells(i, 13), "yyyy年m月d日")  'M列
+    description = createDescription(city_name, data_size, data_url, data_list_csv, data_date)
+    sheet.Cells(i, 4) = description
+  Next
+
+  MsgBox "description 列の作成おわり", vbInformation
+  
+  Exit Sub
+Eh:
+  MsgBox Err.description
+
+
+
+End Sub
+
+
+Private Sub TestCreate()
+
+  Dim sheet As Worksheet
+  Set sheet = Worksheets("更新用Sheet1")
+  
+  Dim description As String
+  Dim city_name As String
+  Dim data_size As String
+  Dim data_url As String
+  Dim data_list_csv As String
+  Dim data_date As String
+  'city_name = "毛呂山町"
+  'data_size = "35MB"
+  'data_url = "https://www.geospatial.jp/ckan/dataset/plateau-11326-moroyama-machi-2020"
+  'data_list_csv = "建築物,区域区分,道路,土地利用,地形"
+  'data_date = "2021年7月20日"
+  
+  city_name = sheet.Cells(2, 8)
+  data_size = sheet.Cells(2, 10)
+  data_url = sheet.Cells(2, 11)
+  data_list_csv = sheet.Cells(2, 12)
+  data_date = Format(sheet.Cells(2, 13), "yyyy年m月d日")
+  
+  description = createDescription(city_name, data_size, data_url, data_list_csv, data_date)
+  Debug.Print description
+
+
+End Sub
+
+'descriptionの記載内容を作成
+Private Function createDescription(ByVal city_name As String, ByVal data_size As String, ByVal data_url As String, ByVal data_list_csv As String, ByVal data_date As String) As String
+
+'ファイルサイズ：約35MB－本データは、G空間情報センターで公開されている
+'<a href='https://www.geospatial.jp/ckan/dataset/plateau-11326-moroyama-machi-2020' rel='nofollow ugc' target='_blank'>
+'3D都市モデル（Project PLATEAU）xx市町（2020年度）</a>のCityGML形式のデータを
+'「<a href='https://github.com/EsriJapan/3D-CityModel-ConversionTools-for-ArcGIS' rel='nofollow ugc' target='_blank'>3D 都市モデルデータ変換ツール for ArcGIS</a>」
+'でファイル ジオデータベースに変換したものです。<div><br /><div><div>次のデータが格納されています。</div>
+'<div><ul><li>建築物</li><li>区域区分</li><li>道路</li><li>土地利用</li><li>地形</li></ul></div></div>
+'<div>ファイルフォーマット</div><div><ul><li>7z</li></ul>
+'<div>変換したCityGMLの更新日</div><div><ul><li>2021年7月20日</li></ul></div>
+
+  Dim desc As String
+  Dim data_list As String
+  data_list = createList(data_list_csv)
+  
+  desc = "ファイルサイズ：約" & data_size & "－本データは、G空間情報センターで公開されている" & _
+         "<a href='" & data_url & "' rel='nofollow ugc' target='_blank'>" & _
+        "3D都市モデル（Project PLATEAU）" & city_name & "（2020年度）</a>のCityGML形式のデータを" & _
+        "「<a href='https://github.com/EsriJapan/3D-CityModel-ConversionTools-for-ArcGIS' rel='nofollow ugc' target='_blank'>3D 都市モデルデータ変換ツール for ArcGIS</a>」" & _
+        "でファイル ジオデータベースに変換したものです。<div><br /><div><div>次のデータが格納されています。</div>" & _
+        "<div>" & data_list & "</div></div>" & _
+        "<div>ファイルフォーマット</div><div><ul><li>7z</li></ul>" & _
+        "<div>変換したCityGMLの更新日</div><div><ul><li>" & data_date & "</li></ul></div>"
+  
+  createDescription = desc
+
+End Function
+
+'CSVから<ul><li></li></ul>を作成
+Private Function createList(ByVal data_list_csv As String) As String
+
+  Dim desc As String
+  Dim tmp As Variant
+  tmp = Split(data_list_csv, ",")
+  Dim i As Long
+  desc = "<ul>"
+  For i = 0 To UBound(tmp)
+    desc = desc & "<li>" & tmp(i) & "</li>"
+  Next i
+  
+  desc = desc & "</ul>"
+  
+  createList = desc
+
+End Function
+
+'指定の行の最終列を返す
+Private Function getLastCol(ByVal sheet As Worksheet, ByVal i As Long) As Long
+
+  Dim lastCol As Long
+  
+  lastCol = sheet.Cells(i, Columns.Count).End(xlToLeft).Column
+  
+  getLastCol = lastCol
+
+End Function
+
+
+'指定の列の最終行を返す
+Private Function getLastRow(ByVal sheet As Worksheet, ByVal j As Long) As Long
+
+  Dim lastRow  As Long
+  
+  'lastRow = sheet.Range("A655636").End(xlUp).Row 'Excel97～2003までの場合はOK
+  lastRow = sheet.Cells(Rows.Count, j).End(xlUp).Row
+
+  getLastRow = lastRow
+
+End Function
