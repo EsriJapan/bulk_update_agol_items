@@ -1,12 +1,12 @@
-# Excel+PythonでArcGIS Online / Portal のアイテム情報を一括更新
-Excel＋ArcGIS API for PythonでArcGIS Online（もしくはPortal）のアイテム情報を一括更新するサンプルです。
+# Excel+PythonでArcGIS Online / Portal のアイテム詳細を一括更新
+Excel × ArcGIS API for Python でArcGIS Online（もしくはPortal）のアイテム詳細を一括更新するサンプルです。
 
 ## 概要
 
-Excel に整理してあるArcGIS Online（もしくはPortal） のアイテム情報を、ArcGIS API for Python を使って、一括更新するスクリプトとExcel のサンプルです。
+Excel に整理してあるArcGIS Online（もしくはPortal） のアイテム詳細の情報を、ArcGIS API for Python を使って、一括更新するスクリプトとExcel のサンプルです。
 同時にこのスクリプト内では、アイテムの削除防止の有効化、特定グループに共有、所有者の変更、パブリックで公開するまでを行っています。
 
-2021年に[ArcGIS Hub Basic](https://www.esrij.com/products/arcgis-hub/) の機能を使って作成した「[3D 都市モデルの ArcGIS における活用事例を集めた活用サイト](https://3d-city-model.esrij.com/)」に掲載したファイル ジオデータベース (FGDB) のアイテム情報の更新時にこのスクリプトを利用しました。
+2021年に[ArcGIS Hub Basic](https://www.esrij.com/products/arcgis-hub/) の機能を使って作成した「[3D 都市モデルの ArcGIS における活用事例を集めた活用サイト](https://3d-city-model.esrij.com/)」に掲載したファイル ジオデータベース (FGDB) のアイテム詳細の更新時にこのスクリプトを利用しました。
 
 特定グループは任意にidで指定可能ですが、今回のサンプルでは、ESRIジャパンのArcGIS Online 組織サイト（https://ej.maps.arcgis.com/ ）の「国土交通省 3D都市モデル 「Project PLATEAU」の活用 のコンテンツ」(id:d568e2190c4f456f8bd812c8e07c719a) のグループに共有することで、ArcGIS Hub 側で情報の登録を重複して行うことことなく、最終的には、[カタログサイト](https://3d-city-model.esrij.com/search?collection=Document&sort=name) から、*105* のアイテムを公開した状態になっております。
 
