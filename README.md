@@ -1,5 +1,5 @@
-# Excel+PythonでArcGIS Online / Portal のアイテム詳細を一括更新
-Excel × ArcGIS API for Python でArcGIS Online（もしくはPortal）のアイテム詳細を一括更新するサンプルです。
+# Excel × PythonでArcGIS Online / Portal のアイテム詳細を一括更新
+Excel × Python（ArcGIS API for Python）でArcGIS Online（もしくはPortal）のアイテム詳細を一括更新するサンプルです。
 
 ## 概要
 
